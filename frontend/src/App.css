@@ -1,0 +1,67 @@
+/* Add your custom styles here */
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --primary-color: #f7374f;
+  --white-color: #ffffff;
+  --black-color: #000000;
+  --light-bg: #f8f9fa;
+}
+
+/* You can add more custom styles for your wedding decoration business */
+.hero-section {
+  background-color: var(--light-bg);
+  padding: 50px 0;
+}
+
+.section-title {
+  position: relative;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 50px;
+  height: 2px;
+  background-color: var(--primary-color);
+}
+
+/* Primary button override */
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: #e02e44 !important;
+  border-color: #e02e44 !important;
+}
+
+.btn-outline-primary {
+  color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active {
+  background-color: var(--primary-color) !important;
+  color: var(--white-color) !important;
+}
+
+/* Text colors */
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+/* Add more custom styles as needed */
