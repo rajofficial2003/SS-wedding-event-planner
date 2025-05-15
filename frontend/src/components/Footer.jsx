@@ -9,7 +9,7 @@ const Footer = () => {
         <Row className="mb-4">
 
           <Col lg={3} md={6} className="mb-4 mb-md-0">
-            <h5 className="text-uppercase mb-4" style={{ color: "#f7374f" }}>
+            <h5 className="text-uppercase mb-4" style={{ color: "var(--primary-color)" }}>
               DECORATIONS
             </h5>
             <ul className="list-unstyled">
@@ -52,7 +52,7 @@ const Footer = () => {
           </Col>
 
           <Col lg={3} md={6} className="mb-4 mb-md-0">
-            <h5 className="text-uppercase mb-4" style={{ color: "#f7374f" }}>
+            <h5 className="text-uppercase mb-4" style={{ color: "var(--primary-color)" }}>
             OTHER SERVICES
             </h5>
             <ul className="list-unstyled">
@@ -85,7 +85,7 @@ const Footer = () => {
           </Col>
 
           <Col lg={3} md={6} className="mb-4 mb-md-0">
-            <h5 className="text-uppercase mb-4" style={{ color: "#f7374f" }}>
+            <h5 className="text-uppercase mb-4" style={{ color: "var(--primary-color)" }}>
               Gallery
             </h5>
             <ul className="list-unstyled">
@@ -128,7 +128,7 @@ const Footer = () => {
           </Col>
 
           <Col lg={3} md={6} className="mb-4 mb-md-0">
-            <h5 className="text-uppercase mb-4" style={{ color: "#f7374f" }}>
+            <h5 className="text-uppercase mb-4" style={{ color: "var(--primary-color)" }}>
               Our Location
             </h5>
             <p className="d-flex align-items-center mb-2">
@@ -147,12 +147,12 @@ const Footer = () => {
 
         </Row>
 
-        <hr className="my-4" style={{ backgroundColor: "#f7374f", opacity: "0.2" }} />
+        <hr className="my-4" style={{ backgroundColor: "var(--primary-color)", opacity: "0.2" }} />
 
         <Row className="align-items-center text-center">
           <Col className="mb-3 mb-md-0">
             <p className="mb-0">&copy; SS Wedding Planner {new Date().getFullYear()}. All rights reserved.</p>
-            <p>Powered By  <a href="#" className="text-decoration-none me-3" style={{ color: "#f7374f" }}>CRUD Technologies</a></p>
+            <p>Powered By  <a href="#" className="text-decoration-none me-3" style={{ color: "var(--primary-color)" }}>CRUD Technologies</a></p>
           </Col>
           <div className="">
               <a href="https://instagram.com" target="blank" className="text-dark me-3">

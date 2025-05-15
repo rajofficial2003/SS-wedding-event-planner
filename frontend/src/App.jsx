@@ -8,7 +8,10 @@ import Footer from "./components/Footer"
 
 // Pages (you'll need to create these)
 import Home from "./pages/Home"
+import Gallery from "./pages/Gallery"
+import About from "./pages/About"
 import NotFound from "./pages/NotFound"
+import BookUs from "./pages/Book-us"
 
 function App() {
   return (
@@ -18,6 +21,11 @@ function App() {
         <main className="flex-grow-1">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/Gallery" element={<Gallery />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/Book-us" element={<BookUs />} />
+            {/* Add more routes as needed */}
+            {/* Catch-all route for 404 Not Found */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

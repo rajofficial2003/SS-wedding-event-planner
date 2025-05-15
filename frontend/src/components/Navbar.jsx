@@ -6,12 +6,7 @@ const MainNavbar = () => {
     <Navbar bg="white" expand="lg" className="py-3 shadow-sm">
       <Container>
         <Navbar.Brand as={Link} to="/">
-          <img
-            src={ "/sslogo.png"}
-            alt="Wedding Decoration Logo"
-            height="50"
-            className="d-inline-block align-top"
-          />
+          <span className="">SS Decors</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

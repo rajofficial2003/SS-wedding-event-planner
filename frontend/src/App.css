@@ -1,4 +1,6 @@
 /* Add your custom styles here */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
 body {
   font-family: "Poppins", sans-serif;
 }
@@ -10,10 +12,80 @@ body {
   --light-bg: #f8f9fa;
 }
 
+/* Global font styles */
+h1, h2, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+}
+
+h3, .script-font {
+  font-family: 'Great Vibes', cursive;
+}
+
+p, .body-text {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Navbar styling */
+.navbar-brand {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2rem;
+  color: var(--primary-color) !important;
+}
+
+.nav-link {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+/* Button styling */
+.btn {
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 0.5px;
+}
+
+/* Footer styling */
+footer h5 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+footer a, footer p {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* 404 Page styling */
+.display-1 {
+  font-family: 'Playfair Display', serif;
+}
+
+.not-found-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3rem;
+  color: var(--primary-color);
+}
+
 /* You can add more custom styles for your wedding decoration business */
 .hero-section {
   background-color: var(--light-bg);
   padding: 50px 0;
+}
+
+.hero-section h3 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.hero-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 2.2rem;
+  color: var(--black-color);
+  margin-bottom: 1.5rem;
 }
 
 .section-title {
@@ -32,6 +104,37 @@ body {
   width: 50px;
   height: 2px;
   background-color: var(--primary-color);
+}
+
+/* Carousel styles */
+.carousel-section {
+  margin-bottom: 2rem;
+}
+
+.carousel-container {
+  max-height: 500px;
+  overflow: hidden;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Carousel controls styling */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  display: none;
+}
+
+.carousel-indicators button {
+  background-color: var(--primary-color) !important;
+  height: 10px !important;
+  width: 10px !important;
+  border-radius: 50%;
+  margin: 0 5px;
 }
 
 /* Primary button override */
