@@ -60,7 +60,6 @@ const MainNavbar = () => {
     { name: "Sangeet & Mehendi", path: "/sangeet-mehendi" },
     { name: "Baby Shower", path: "/baby-shower" },
     { name: "Birthday Function", path: "/birthday-function" },
-    { name: "Corporate Events", path: "/corporate-events" },
     { name: "House Warming", path: "/house-warming" }
   ];
 

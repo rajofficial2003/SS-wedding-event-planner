@@ -19,122 +19,182 @@ const Gallery = () => {
     { id: "babyCradle", name: "Baby Cradle" }
   ];
 
-  // Gallery images with categories
-  const galleryImages = [
+  // Separate image arrays for each category
+  const engagementImages = [
     {
       id: 1,
       src: "https://vermiliondecors.com/assets/images/gallery/e1.webp",
-      alt: "Outdoor engagement setup with mandap",
-      categories: ["engagement", "outdoor"]
-    },
-    {
-      id: 2,
-      src: "https://vermiliondecors.com/assets/images/gallery/e2.webp",
-      alt: "Indoor marriage decoration with stage",
-      categories: ["marriage"]
+      alt: "Outdoor engagement setup with mandap"
     },
     {
       id: 3,
       src: "https://vermiliondecors.com/assets/images/gallery/e3.webp",
-      alt: "Engagement stage with pink backdrop",
-      categories: ["engagement"]
+      alt: "Engagement stage with pink backdrop"
     },
     {
       id: 4,
       src: "https://vermiliondecors.com/assets/images/gallery/e4.webp",
-      alt: "Floral engagement decoration",
-      categories: ["engagement"]
-    },
-    {
-      id: 5,
-      src: "https://vermiliondecors.com/assets/images/gallery/e5.webp",
-      alt: "Green themed marriage decoration",
-      categories: ["marriage"]
-    },
-    {
-      id: 6,
-      src: "https://vermiliondecors.com/assets/images/gallery/e6.webp",
-      alt: "Reception hall decoration",
-      categories: ["reception"]
-    },
-    {
-      id: 7,
-      src: "https://vermiliondecors.com/assets/images/gallery/e7.webp",
-      alt: "Sangeet decoration with hanging flowers",
-      categories: ["sangeet"]
+      alt: "Floral engagement decoration"
     },
     {
       id: 8,
       src: "https://vermiliondecors.com/assets/images/gallery/e8.webp",
-      alt: "Engagement photo display",
-      categories: ["engagement"]
+      alt: "Engagement photo display"
     },
     {
       id: 9,
       src: "https://vermiliondecors.com/assets/images/gallery/e9.webp",
-      alt: "Engagement invitation display",
-      categories: ["engagement"]
+      alt: "Engagement invitation display"
     },
     {
       id: 10,
       src: "https://vermiliondecors.com/assets/images/gallery/e10.webp",
-      alt: "Simple engagement stage",
-      categories: ["engagement"]
-    },
-    {
-      id: 11,
-      src: "https://vermiliondecors.com/assets/images/gallery/e11.webp",
-      alt: "White floral marriage decoration",
-      categories: ["marriage"]
-    },
-    {
-      id: 12,
-      src: "https://vermiliondecors.com/assets/images/gallery/e12.webp",
-      alt: "Reception stage with couple seating",
-      categories: ["reception"]
+      alt: "Simple engagement stage"
     },
     {
       id: 13,
       src: "https://vermiliondecors.com/assets/images/gallery/e13.webp",
-      alt: "Pink themed engagement decoration",
-      categories: ["engagement"]
+      alt: "Pink themed engagement decoration"
     },
     {
       id: 14,
       src: "https://vermiliondecors.com/assets/images/gallery/e14.webp",
-      alt: "Pink floral wall for engagement",
-      categories: ["engagement"]
-    },
-    {
-      id: 15,
-      src: "https://vermiliondecors.com/assets/images/gallery/e15.webp",
-      alt: "Christian wedding welcome board",
-      categories: ["christain"]
-    },
-    {
-      id: 16,
-      src: "https://vermiliondecors.com/assets/images/gallery/e16.webp",
-      alt: "Reception stage with pink backdrop",
-      categories: ["reception"]
+      alt: "Pink floral wall for engagement"
     },
     {
       id: 17,
       src: "https://vermiliondecors.com/assets/images/gallery/e17.webp",
-      alt: "Floral engagement backdrop",
-      categories: ["engagement"]
+      alt: "Floral engagement backdrop"
+    }
+  ];
+
+  const marriageImages = [
+    {
+      id: 2,
+      src: "https://vermiliondecors.com/assets/images/gallery/e2.webp",
+      alt: "Indoor marriage decoration with stage"
+    },
+    {
+      id: 5,
+      src: "https://vermiliondecors.com/assets/images/gallery/e5.webp",
+      alt: "Green themed marriage decoration"
+    },
+    {
+      id: 11,
+      src: "https://vermiliondecors.com/assets/images/gallery/e11.webp",
+      alt: "White floral marriage decoration"
     },
     {
       id: 18,
       src: "https://vermiliondecors.com/assets/images/gallery/e18.webp",
-      alt: "Outdoor marriage setup",
-      categories: ["marriage", "outdoor"]
+      alt: "Outdoor marriage setup"
     }
   ];
 
-  // Filter images based on active category
-  const filteredImages = activeCategory === "all" 
-    ? galleryImages 
-    : galleryImages.filter(image => image.categories.includes(activeCategory));
+  const outdoorImages = [
+    {
+      id: 1,
+      src: "https://vermiliondecors.com/assets/images/gallery/e1.webp",
+      alt: "Outdoor engagement setup with mandap"
+    },
+    {
+      id: 18,
+      src: "https://vermiliondecors.com/assets/images/gallery/e18.webp",
+      alt: "Outdoor marriage setup"
+    }
+  ];
+
+  const receptionImages = [
+    {
+      id: 6,
+      src: "https://vermiliondecors.com/assets/images/gallery/e6.webp",
+      alt: "Reception hall decoration"
+    },
+    {
+      id: 12,
+      src: "https://vermiliondecors.com/assets/images/gallery/e12.webp",
+      alt: "Reception stage with couple seating"
+    },
+    {
+      id: 16,
+      src: "https://vermiliondecors.com/assets/images/gallery/e16.webp",
+      alt: "Reception stage with pink backdrop"
+    }
+  ];
+
+  const christainImages = [
+    {
+      id: 15,
+      src: "https://vermiliondecors.com/assets/images/gallery/e15.webp",
+      alt: "Christian wedding welcome board"
+    }
+  ];
+
+  const nikkahImages = [
+    // Currently no images for this category
+  ];
+
+  const sangeetImages = [
+    {
+      id: 7,
+      src: "https://vermiliondecors.com/assets/images/gallery/e7.webp",
+      alt: "Sangeet decoration with hanging flowers"
+    }
+  ];
+
+  const birthdayImages = [
+    // Currently no images for this category
+  ];
+
+  const babyShowerImages = [
+    // Currently no images for this category
+  ];
+
+  const babyCradleImages = [
+    // Currently no images for this category
+  ];
+
+  // Get images based on active category
+  const getFilteredImages = () => {
+    switch (activeCategory) {
+      case "engagement":
+        return engagementImages;
+      case "marriage":
+        return marriageImages;
+      case "outdoor":
+        return outdoorImages;
+      case "reception":
+        return receptionImages;
+      case "christain":
+        return christainImages;
+      case "nikkah":
+        return nikkahImages;
+      case "sangeet":
+        return sangeetImages;
+      case "birthday":
+        return birthdayImages;
+      case "babyShower":
+        return babyShowerImages;
+      case "babyCradle":
+        return babyCradleImages;
+      case "all":
+      default:
+        // Combine all images for "all" category
+        return [
+          ...engagementImages,
+          ...marriageImages,
+          ...receptionImages,
+          ...christainImages,
+          ...sangeetImages,
+          // Filter out duplicates that appear in multiple categories
+        ].filter((image, index, self) => 
+          index === self.findIndex((i) => i.id === image.id)
+        );
+    }
+  };
+
+  // Get filtered images
+  const filteredImages = getFilteredImages();
 
   return (
     <div className="gallery-page">
