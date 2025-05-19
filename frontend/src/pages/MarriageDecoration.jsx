@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Testimonials from "../components/Testimonials";
+import ImagePreviewModal from "../components/ImagePreviewModal";
 
 const MarriageDecoration = () => {
   // Traditional Marriage client names
@@ -39,6 +40,11 @@ const MarriageDecoration = () => {
   const [activeTraditionalClient, setActiveTraditionalClient] = useState(traditionalClients[0].id);
   const [activeChristianClient, setActiveChristianClient] = useState(christianClients[0].id);
   const [activeMuslimClient, setActiveMuslimClient] = useState(muslimClients[0].id);
+
+  // State for image preview modal
+  const [showModal, setShowModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [currentGallery, setCurrentGallery] = useState([]);
 
   // Traditional Marriage image arrays
   const ramuSangeethaImages = [
@@ -292,6 +298,31 @@ const MarriageDecoration = () => {
   const christianImages = getChristianImages();
   const muslimImages = getMuslimImages();
 
+  // Function to open image preview modal
+  const openImageModal = (image, gallery) => {
+    setSelectedImage(image);
+    setCurrentGallery(gallery);
+    setShowModal(true);
+  };
+
+  // Function to navigate to next image
+  const nextImage = () => {
+    if (!selectedImage || currentGallery.length === 0) return;
+    
+    const currentIndex = currentGallery.findIndex(img => img.id === selectedImage.id);
+    const nextIndex = (currentIndex + 1) % currentGallery.length;
+    setSelectedImage(currentGallery[nextIndex]);
+  };
+
+  // Function to navigate to previous image
+  const prevImage = () => {
+    if (!selectedImage || currentGallery.length === 0) return;
+    
+    const currentIndex = currentGallery.findIndex(img => img.id === selectedImage.id);
+    const prevIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+    setSelectedImage(currentGallery[prevIndex]);
+  };
+
   return (
     <div className="marriage-decoration-page">
       {/* Banner Section with Responsive Heading */}
@@ -356,7 +387,11 @@ const MarriageDecoration = () => {
               <Row>
                 {traditionalImages.map(image => (
                   <Col key={image.id} xs={12} sm={6} md={4} className="gallery-item mb-4">
-                    <div className="gallery-image-container" style={{ overflow: 'hidden' }}>
+                    <div 
+                      className="gallery-image-container" 
+                      style={{ overflow: 'hidden', cursor: 'pointer' }}
+                      onClick={() => openImageModal(image, traditionalImages)}
+                    >
                       <img 
                         src={image.src || "/placeholder.svg"} 
                         alt={image.alt} 
@@ -422,7 +457,11 @@ const MarriageDecoration = () => {
               <Row>
                 {christianImages.map(image => (
                   <Col key={image.id} xs={12} sm={6} md={4} className="gallery-item mb-4">
-                    <div className="gallery-image-container" style={{ overflow: 'hidden' }}>
+                    <div 
+                      className="gallery-image-container" 
+                      style={{ overflow: 'hidden', cursor: 'pointer' }}
+                      onClick={() => openImageModal(image, christianImages)}
+                    >
                       <img 
                         src={image.src || "/placeholder.svg"} 
                         alt={image.alt} 
@@ -488,7 +527,11 @@ const MarriageDecoration = () => {
               <Row>
                 {muslimImages.map(image => (
                   <Col key={image.id} xs={12} sm={6} md={4} className="gallery-item mb-4">
-                    <div className="gallery-image-container" style={{ overflow: 'hidden' }}>
+                    <div 
+                      className="gallery-image-container" 
+                      style={{ overflow: 'hidden', cursor: 'pointer' }}
+                      onClick={() => openImageModal(image, muslimImages)}
+                    >
                       <img 
                         src={image.src || "/placeholder.svg"} 
                         alt={image.alt} 
@@ -518,6 +561,16 @@ const MarriageDecoration = () => {
 
       {/* Use the Testimonials Component */}
       <Testimonials />
+
+      {/* Use the ImagePreviewModal Component */}
+      <ImagePreviewModal 
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        selectedImage={selectedImage}
+        currentGallery={currentGallery}
+        onNext={nextImage}
+        onPrev={prevImage}
+      />
     </div>
   );
 };

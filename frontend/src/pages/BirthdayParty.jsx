@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Testimonials from "../components/Testimonials";
+import ImagePreviewModal from "../components/ImagePreviewModal";
 
 const BirthdayParty = () => {
   // Theme names list with IDs
@@ -19,6 +20,11 @@ const BirthdayParty = () => {
 
   // State to track which theme's images to display (default to first theme)
   const [activeTheme, setActiveTheme] = useState(themeNames[0].id);
+
+  // State for image preview modal
+  const [showModal, setShowModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [currentGallery, setCurrentGallery] = useState([]);
 
   // Separate image arrays for each theme
   const winterWonderlandImages = [
@@ -117,6 +123,31 @@ const BirthdayParty = () => {
   // Get filtered images
   const filteredImages = getFilteredImages();
 
+  // Function to open image preview modal
+  const openImageModal = (image, gallery) => {
+    setSelectedImage(image);
+    setCurrentGallery(gallery);
+    setShowModal(true);
+  };
+
+  // Function to navigate to next image
+  const nextImage = () => {
+    if (!selectedImage || currentGallery.length === 0) return;
+    
+    const currentIndex = currentGallery.findIndex(img => img.id === selectedImage.id);
+    const nextIndex = (currentIndex + 1) % currentGallery.length;
+    setSelectedImage(currentGallery[nextIndex]);
+  };
+
+  // Function to navigate to previous image
+  const prevImage = () => {
+    if (!selectedImage || currentGallery.length === 0) return;
+    
+    const currentIndex = currentGallery.findIndex(img => img.id === selectedImage.id);
+    const prevIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+    setSelectedImage(currentGallery[prevIndex]);
+  };
+
   return (
     <div className="birthday-party-page">
       {/* Banner Section with Responsive Heading */}
@@ -180,7 +211,11 @@ const BirthdayParty = () => {
           <Row>
             {filteredImages.map(image => (
               <Col key={image.id} xs={12} sm={6} md={4} className="gallery-item mb-4">
-                <div className="gallery-image-container" style={{ overflow: 'hidden' }}>
+                <div 
+                  className="gallery-image-container" 
+                  style={{ overflow: 'hidden', cursor: 'pointer' }}
+                  onClick={() => openImageModal(image, filteredImages)}
+                >
                   <img 
                     src={image.src || "/placeholder.svg"} 
                     alt={image.alt} 
@@ -215,6 +250,16 @@ const BirthdayParty = () => {
 
       {/* Use the Testimonials Component */}
       <Testimonials />
+
+      {/* Use the ImagePreviewModal Component */}
+      <ImagePreviewModal 
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        selectedImage={selectedImage}
+        currentGallery={currentGallery}
+        onNext={nextImage}
+        onPrev={prevImage}
+      />
     </div>
   );
 };
