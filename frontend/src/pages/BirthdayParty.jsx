@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Card, Carousel, Button } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import Testimonials from "../components/Testimonials";
 
 const BirthdayParty = () => {
   // Theme names list with IDs
@@ -116,31 +117,6 @@ const BirthdayParty = () => {
   // Get filtered images
   const filteredImages = getFilteredImages();
 
-  // Testimonials data
-  const testimonials = [
-    {
-      id: 1,
-      name: "Janani S",
-      location: "Chennai",
-      image: "https://i.pinimg.com/736x/7e/8a/2f/7e8a2f115e6317687707837c667ce79d.jpg",
-      text: "I cannot possibly contain enough words to completely express our appreciation. When it came time to select an event planner for my daughter's 4 th Birthday, we luckily found you based on our friend's recommendation.Special thank you to Nikitha who had such great communication skills! She understood what we wanted, even if it was a small pin! She was in constant touch with us and made sure every thing was going fine! Without your help our special day would not have been the picture-perfect event we always thought you of. Your planning, preparation, and attention to detail was amazing. Thank you so much. Decor was beautiful and was appreciated by our guest which Ismall! Vijay took care of."
-    },
-    {
-      id: 2,
-      name: "Priya & Karthik",
-      location: "Chennai",
-      image: "https://i.pinimg.com/736x/1d/d2/85/1dd28553ccfb8b4d6d50ddbbc0a2e781.jpg",
-      text: "We had our son's birthday party decorated by Vermilion Decors and it was absolutely stunning! The themed decorations and lighting created the perfect ambiance. Everyone was impressed with the attention to detail. Highly recommend their services for any special occasion!"
-    },
-    {
-      id: 3,
-      name: "Meera & Rahul",
-      location: "Chennai",
-      image: "https://i.pinimg.com/736x/2c/bf/62/2cbf6280e528bdf9641711f71f5e5aa3.jpg",
-      text: "Vermilion Decors transformed our simple venue into a magical space for our daughter's birthday. The team was professional, responsive, and executed our vision perfectly. The decoration exceeded our expectations and made for beautiful photographs that we'll cherish forever."
-    }
-  ];
-
   return (
     <div className="birthday-party-page">
       {/* Banner Section with Responsive Heading */}
@@ -237,102 +213,8 @@ const BirthdayParty = () => {
         </div>
       </Container>
 
-      {/* Testimonials Section */}
-      <Container className="testimonials-section mb-5">
-        <div className="text-center mb-4">
-          <span 
-            className="badge bg-dark py-2 px-3 mb-3"
-            style={{ fontFamily: 'Poppins, sans-serif' }}
-          >
-            Testimonials
-          </span>
-          <h2 
-            className="section-title"
-            style={{ 
-              fontFamily: 'Playfair Display, serif',
-              fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', // Responsive font size
-              marginBottom: '40px'
-            }}
-          >
-            Experience Matters
-          </h2>
-        </div>
-
-        <Carousel 
-          indicators={false} 
-          controls={true}
-          interval={5000}
-          className="testimonial-carousel"
-        >
-          {testimonials.map(testimonial => (
-            <Carousel.Item key={testimonial.id}>
-              <div className="d-flex justify-content-center">
-                <div className="testimonial-content text-center" style={{ maxWidth: "800px" }}>
-                  <div className="testimonial-image mb-4">
-                    <img 
-                      src={testimonial.image || "/placeholder.svg"} 
-                      alt={testimonial.name} 
-                      className="rounded-circle"
-                      style={{ 
-                        width: "100px", 
-                        height: "100px", 
-                        objectFit: "cover",
-                        border: "3px solid #dc3545"
-                      }}
-                    />
-                  </div>
-                  <div 
-                    className="testimonial-text-container mb-4"
-                    style={{ 
-                      height: "150px", 
-                      overflow: "auto",
-                      scrollbarWidth: "thin",
-                      scrollbarColor: "#dc3545 #f0f0f0"
-                    }}
-                  >
-                    <p 
-                      className="testimonial-text"
-                      style={{ 
-                        fontFamily: 'Poppins, sans-serif',
-                        fontSize: '16px',
-                        lineHeight: '1.8',
-                        fontStyle: 'italic',
-                        margin: 0,
-                        padding: "0 15px"
-                      }}
-                    >
-                      "{testimonial.text}"
-                    </p>
-                  </div>
-                  <h5 
-                    className="testimonial-name"
-                    style={{ fontFamily: 'Playfair Display, serif' }}
-                  >
-                    {testimonial.name}
-                  </h5>
-                  <p 
-                    className="testimonial-location"
-                    style={{ 
-                      fontFamily: 'Poppins, sans-serif',
-                      fontSize: '14px',
-                      color: '#777'
-                    }}
-                  >
-                    {testimonial.location}
-                  </p>
-                </div>
-              </div>
-            </Carousel.Item>
-          ))}
-        </Carousel>
-      </Container>
-
-      {/* Final Divider */}
-      <Container>
-        <div className="divider text-center mb-5">
-          <hr style={{ borderTop: "1px dashed #ccc" }} />
-        </div>
-      </Container>
+      {/* Use the Testimonials Component */}
+      <Testimonials />
     </div>
   );
 };
