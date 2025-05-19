@@ -5,6 +5,7 @@ import "./App.css"
 // Components
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
+import BackToTop from "./components/BackToTop"
 
 // Pages (you'll need to create these)
 import Home from "./pages/Home"
@@ -18,6 +19,7 @@ import SangeetAndMehendi from "./pages/SangeetAndMehendi"
 import BabyShower from "./pages/BabyShower"
 import BirthdayParty from "./pages/BirthdayParty"
 import Housewarming from "./pages/Housewarming"
+import MarriageDecoration from "./pages/MarriageDecoration"
 
 function App() {
   return (
@@ -36,12 +38,14 @@ function App() {
             <Route path="/baby-shower" element={<BabyShower />} />
             <Route path="/birthday-function" element={<BirthdayParty />} />
             <Route path="/house-warming" element={<Housewarming />} />
+            <Route path="/marriage-decoration" element={<MarriageDecoration />} />
             {/* Add more routes as needed */}
             {/* Catch-all route for 404 Not Found */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
         <Footer />
+        <BackToTop />
       </div>
     </Router>
   )
