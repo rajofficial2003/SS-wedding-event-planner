@@ -21,6 +21,8 @@ import BabyShower from "./pages/BabyShower"
 import BirthdayParty from "./pages/BirthdayParty"
 import Housewarming from "./pages/Housewarming"
 import MarriageDecoration from "./pages/MarriageDecoration"
+import VenueManagement from "./pages/Wedding Planning/venue-management"
+import WeddingDecoration from "./pages/Wedding Planning/Wedding-decoration"
 
 // Admin Pages
 import Login from "./pages/Login"
@@ -59,6 +61,9 @@ function App() {
           <Route path="/baby-shower" element={<BabyShower />} />
           <Route path="/birthday-function" element={<BirthdayParty />} />
           <Route path="/house-warming" element={<Housewarming />} />
+          <Route path="/marriage-decoration" element={<MarriageDecoration />} />
+          <Route path="/venue-management" element={<VenueManagement />} />
+          <Route path="/wedding-decoration" element={<WeddingDecoration />} />
           
           
           {/* Admin Routes */}
