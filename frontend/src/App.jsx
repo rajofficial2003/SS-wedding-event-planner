@@ -23,6 +23,10 @@ import Housewarming from "./pages/Housewarming"
 import MarriageDecoration from "./pages/MarriageDecoration"
 import VenueManagement from "./pages/Wedding Planning/venue-management"
 import WeddingDecoration from "./pages/Wedding Planning/Wedding-decoration"
+import LightMusic from "./pages/Wedding Planning/light-music"
+import DJ from "./pages/Wedding Planning/DJ"
+import Catering from "./pages/Wedding Planning/catering"
+import ChatStall from "./pages/Wedding Planning/chatstall"
 
 // Admin Pages
 import Login from "./pages/Login"
@@ -64,6 +68,10 @@ function App() {
           <Route path="/marriage-decoration" element={<MarriageDecoration />} />
           <Route path="/venue-management" element={<VenueManagement />} />
           <Route path="/wedding-decoration" element={<WeddingDecoration />} />
+          <Route path="/light-music" element={<LightMusic />} />
+          <Route path="/DJ" element={<DJ />} />
+          <Route path="/catering" element={<Catering />} />
+          <Route path="/chat-stall" element={<ChatStall />} />
           
           
           {/* Admin Routes */}
