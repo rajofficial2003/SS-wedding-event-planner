@@ -1,25 +1,28 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import Testimonials from "../components/Testimonials";
-import ImagePreviewModal from "../components/ImagePreviewModal";
+import Testimonials from "../../components/Testimonials";
+import ImagePreviewModal from "../../components/ImagePreviewModal";
 
-const EngagementDecoration = () => {
-  // Client names list with IDs (without "All" option)
+const ReceptionDecoration = () => {
+  // Client names list with IDs
   const clientNames = [
-    { id: "prithvi-aishwarya", name: "Prithvi + Aishwarya" },
-    { id: "kokila-somasundaram", name: "Kokila + Somasundaram" },
-    { id: "taj", name: "Taj" },
-    { id: "arun-yegapriya", name: "Arun + Yegapriya" },
-    { id: "rithika-vetri", name: "Rithika + Vetri" },
-    { id: "balaji-swathi", name: "Balaji + Swathi" },
-    { id: "sushmita-prakash", name: "Sushmita + Prakash" },
-    { id: "vignesh-divya", name: "Vignesh + Divya" },
-    { id: "nandhini-jacob", name: "Nandhini & Jacob" },
-    { id: "preetha-ashwin", name: "Preetha & Ashwin" },
-    { id: "sneha-arul", name: "Sneha & Arul" },
-    { id: "akshaya-dharshan", name: "Akshaya & Dharshan" },
-    { id: "minu-subramaiyan", name: "Minu + Subramaiyan" },
-    { id: "ramkumar-niveatha", name: "Ramkumar + Niveatha" }
+    { id: "diwakar-bharathi", name: "Diwakar + Bharathi" },
+    { id: "gowtham-jayalakshmi", name: "Gowtham + Jayalakshmi" },
+    { id: "ramitha-varman", name: "Ramitha + Varman" },
+    { id: "karthik-shivani", name: "Karthik + Shivani" },
+    { id: "abinaya-dinesh", name: "Abinaya + Dinesh" },
+    { id: "priyadharshini-sasidharan", name: "Priyadharshini + Sasidharan" },
+    { id: "jowker-mathura", name: "Jowker + Mathura" },
+    { id: "green-park", name: "Green Park" },
+    { id: "keerthi-kaushik", name: "Keerthi + Kaushik" },
+    { id: "dhanush-sandhya", name: "Dhanush + Sandhya" },
+    { id: "faizan-zehra", name: "Faizan + Zehra" },
+    { id: "feathers-hotel", name: "Feathers Hotel" },
+    { id: "hari-nandini", name: "Hari + Nandini" },
+    { id: "jamuna-cyril", name: "Jamuna +Cyril" },
+    { id: "pandia-jasmine-stanish", name: "Pandia Jasmine + Stanish" },
+    { id: "suganya-srinivasan", name: "Suganya + Srinivasan" },
+    { id: "monica-pranesh", name: "Monica + Pranesh" }
   ];
 
   // State to track which couple's images to display (default to first couple)
@@ -30,113 +33,134 @@ const EngagementDecoration = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentGallery, setCurrentGallery] = useState([]);
 
-  // Separate image arrays for each couple
-  const prithviAishwaryaImages = [
+  // Separate image arrays for each couple/venue
+  const diwakarBharathiImages = [
     {
       id: 1,
       src: "https://vermiliondecors.com/assets/images/gallery/e1.webp",
-      alt: "Prithvi and Aishwarya engagement setup"
+      alt: "Diwakar and Bharathi reception decoration with floral backdrop"
     },
     {
       id: 2,
-      src: "https://vermiliondecors.com/assets/images/gallery/e3.webp",
-      alt: "Prithvi and Aishwarya stage decoration"
-    },
+      src: "https://vermiliondecors.com/assets/images/gallery/e2.webp",
+      alt: "Diwakar and Bharathi reception stage with lighting"
+    }
+  ];
+
+  const gowthamJayalakshmiImages = [
     {
       id: 3,
-      src: "https://vermiliondecors.com/assets/images/gallery/e4.webp",
-      alt: "Prithvi and Aishwarya floral decoration"
-    }
-  ];
-
-  const kokilaSomasundaramImages = [
-    {
-      id: 4,
-      src: "https://vermiliondecors.com/assets/images/gallery/e8.webp",
-      alt: "Kokila and Somasundaram engagement photo display"
+      src: "https://vermiliondecors.com/assets/images/gallery/e3.webp",
+      alt: "Gowtham and Jayalakshmi reception with yellow backdrop"
     },
     {
-      id: 5,
-      src: "https://vermiliondecors.com/assets/images/gallery/e9.webp",
-      alt: "Kokila and Somasundaram invitation display"
+      id: 4,
+      src: "https://vermiliondecors.com/assets/images/gallery/e4.webp",
+      alt: "Gowtham and Jayalakshmi reception entrance"
     }
   ];
 
-  const tajImages = [
+  const ramithaVarmanImages = [
+    {
+      id: 5,
+      src: "https://vermiliondecors.com/assets/images/gallery/e5.webp",
+      alt: "Ramitha and Varman reception with hanging floral decorations"
+    }
+  ];
+
+  const karthikShivaniImages = [
     {
       id: 6,
-      src: "https://vermiliondecors.com/assets/images/gallery/e10.webp",
-      alt: "Taj engagement stage"
+      src: "https://vermiliondecors.com/assets/images/gallery/e6.webp",
+      alt: "Karthik and Shivani reception stage with lighting"
     }
   ];
 
-  const arunYegapriyaImages = [
+  const abinayaDineshImages = [
     {
       id: 7,
-      src: "https://vermiliondecors.com/assets/images/gallery/e13.webp",
-      alt: "Arun and Yegapriya pink themed decoration"
-    }
-  ];
-
-  const rithikaVetriImages = [
+      src: "https://vermiliondecors.com/assets/images/gallery/e7.webp",
+      alt: "Abinaya and Dinesh reception with branded display"
+    },
     {
       id: 8,
-      src: "https://vermiliondecors.com/assets/images/gallery/e14.webp",
-      alt: "Rithika and Vetri floral wall"
+      src: "https://vermiliondecors.com/assets/images/gallery/e8.webp",
+      alt: "Abinaya and Dinesh reception hall decoration"
     }
   ];
 
-  const balajiSwathiImages = [
+  const priyadharshiniSasidharanImages = [
     {
       id: 9,
-      src: "https://vermiliondecors.com/assets/images/gallery/e17.webp",
-      alt: "Balaji and Swathi floral backdrop"
+      src: "https://vermiliondecors.com/assets/images/gallery/e9.webp",
+      alt: "Priyadharshini and Sasidharan reception with floral ceiling"
+    },
+    {
+      id: 10,
+      src: "https://vermiliondecors.com/assets/images/gallery/e10.webp",
+      alt: "Priyadharshini and Sasidharan reception walkway"
+    }
+  ];
+
+  const jowkerMathuraImages = [
+    {
+      id: 11,
+      src: "https://vermiliondecors.com/assets/images/gallery/e11.webp",
+      alt: "Jowker and Mathura reception hall with chandeliers"
     }
   ];
 
   // Empty arrays for couples without images yet
-  const sushmitaPrakashImages = [];
-  const vigneshDivyaImages = [];
-  const nandhiniJacobImages = [];
-  const preethaAshwinImages = [];
-  const snehaArulImages = [];
-  const akshayaDharshanImages = [];
-  const minuSubramaiyanImages = [];
-  const ramkumarNiveathaImages = [];
+  const greenParkImages = [];
+  const keerthiKaushikImages = [];
+  const dhanushSandhyaImages = [];
+  const faizanZehraImages = [];
+  const feathersHotelImages = [];
+  const hariNandiniImages = [];
+  const jamunaCyrilImages = [];
+  const pandiaJasmineStanishImages = [];
+  const suganyaSrinivasanImages = [];
+  const monicaPraneshImages = [];
 
   // Function to get images based on active couple
   const getFilteredImages = () => {
     switch (activeCouple) {
-      case "prithvi-aishwarya":
-        return prithviAishwaryaImages;
-      case "kokila-somasundaram":
-        return kokilaSomasundaramImages;
-      case "taj":
-        return tajImages;
-      case "arun-yegapriya":
-        return arunYegapriyaImages;
-      case "rithika-vetri":
-        return rithikaVetriImages;
-      case "balaji-swathi":
-        return balajiSwathiImages;
-      case "sushmita-prakash":
-        return sushmitaPrakashImages;
-      case "vignesh-divya":
-        return vigneshDivyaImages;
-      case "nandhini-jacob":
-        return nandhiniJacobImages;
-      case "preetha-ashwin":
-        return preethaAshwinImages;
-      case "sneha-arul":
-        return snehaArulImages;
-      case "akshaya-dharshan":
-        return akshayaDharshanImages;
-      case "minu-subramaiyan":
-        return minuSubramaiyanImages;
-      case "ramkumar-niveatha":
-        return ramkumarNiveathaImages;
+      case "diwakar-bharathi":
+        return diwakarBharathiImages;
+      case "gowtham-jayalakshmi":
+        return gowthamJayalakshmiImages;
+      case "ramitha-varman":
+        return ramithaVarmanImages;
+      case "karthik-shivani":
+        return karthikShivaniImages;
+      case "abinaya-dinesh":
+        return abinayaDineshImages;
+      case "priyadharshini-sasidharan":
+        return priyadharshiniSasidharanImages;
+      case "jowker-mathura":
+        return jowkerMathuraImages;
+      case "green-park":
+        return greenParkImages;
+      case "keerthi-kaushik":
+        return keerthiKaushikImages;
+      case "dhanush-sandhya":
+        return dhanushSandhyaImages;
+      case "faizan-zehra":
+        return faizanZehraImages;
+      case "feathers-hotel":
+        return feathersHotelImages;
+      case "hari-nandini":
+        return hariNandiniImages;
+      case "jamuna-cyril":
+        return jamunaCyrilImages;
+      case "pandia-jasmine-stanish":
+        return pandiaJasmineStanishImages;
+      case "suganya-srinivasan":
+        return suganyaSrinivasanImages;
+      case "monica-pranesh":
+        return monicaPraneshImages;
       default:
-        return prithviAishwaryaImages; // Default to first couple if none selected
+        return diwakarBharathiImages; // Default to first couple if none selected
     }
   };
 
@@ -169,12 +193,12 @@ const EngagementDecoration = () => {
   };
 
   return (
-    <div className="engagement-decoration-page">
+    <div className="reception-decoration-page">
       {/* Banner Section with Responsive Heading */}
       <div 
-        className="engagement-banner position-relative" 
+        className="reception-banner position-relative" 
         style={{ 
-          backgroundImage: "url('./wedding decors/engagement-decoration.jpg')", 
+          backgroundImage: "url('./wedding decors/reception-decoration.jpg')", 
           backgroundSize: "cover",
           backgroundPosition: "top center",
           height: "450px",
@@ -193,14 +217,14 @@ const EngagementDecoration = () => {
             width: '100%'
           }}
         >
-          Engagement Stage Decoration In Tiruvannamalai
+          Wedding Reception Decorations In Tiruvannamalai
         </h1>
       </div>
 
       {/* Introduction Text */}
       <Container className="py-4">
         <p className="mb-4" style={{ lineHeight: "1.8" }}>
-          Weddings are a union of love, family and traditions that hold a special place in our hearts forever. Wedding and engagement decorations are something that play an important role in making your wedding startling and <strong>Wedding and engagement stage decorations in Chennai</strong> come off in diverse styles from a traditional setup to outdoor beach weddings to an extravagant theme wedding. Couples no longer want the done-and-dusted wedding stage decoration in chennai. They want something that's fresh and remarkable. We at Vermilion Decors love to deliver nothing but the best for you at your Wedding and engagement decorations. Serving you a wide range of options to choose from to customize from being an array of flowers to surreal lights you name it, we have it.
+          There's no denying that the decor for your reception decorations are important. After all, half your photographs are clicked on the stage! So whether you want a simple design, or you're looking for something royal and grand, here, at Vermilion Events and Decors we offer the best reception decorations for your weddings.
         </p>
 
         {/* Client Names as Filter Buttons */}
@@ -284,4 +308,4 @@ const EngagementDecoration = () => {
   );
 };
 
-export default EngagementDecoration;
+export default ReceptionDecoration;

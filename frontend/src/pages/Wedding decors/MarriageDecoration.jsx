@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import Testimonials from "../components/Testimonials";
-import ImagePreviewModal from "../components/ImagePreviewModal";
+import Testimonials from "../../components/Testimonials";
+import ImagePreviewModal from "../../components/ImagePreviewModal";
 
 const MarriageDecoration = () => {
   // Traditional Marriage client names

@@ -1,63 +1,122 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import Testimonials from "../components/Testimonials";
-import ImagePreviewModal from "../components/ImagePreviewModal";
+import Testimonials from "../../components/Testimonials";
+import ImagePreviewModal from "../../components/ImagePreviewModal";
 
-const Housewarming = () => {
-  // Decoration categories
-  const categories = [
-    { id: "house-warming", name: "House Warming" }
+const BirthdayParty = () => {
+  // Theme names list with IDs
+  const themeNames = [
+    { id: "winter-wonderland", name: "Winter Wonderland" },
+    { id: "krithvik", name: "Krithvik" },
+    { id: "aadhya", name: "Aadhya" },
+    { id: "vivaan", name: "Vivaan" },
+    { id: "likitha", name: "Likitha" },
+    { id: "vrushika", name: "Vrushika" },
+    { id: "dhikshan-dhikshitha", name: "Dhikshan & Dhikshitha" },
+    { id: "mritika", name: "Mritika" },
+    { id: "rain-tree", name: "Rain Tree" },
+    { id: "tiara", name: "Tiara" }
   ];
 
-  // State to track which category's images to display
-  const [activeCategory, setActiveCategory] = useState(categories[0].id);
+  // State to track which theme's images to display (default to first theme)
+  const [activeTheme, setActiveTheme] = useState(themeNames[0].id);
 
   // State for image preview modal
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentGallery, setCurrentGallery] = useState([]);
 
-  // Image arrays for housewarming decorations
-  const housewarmingImages = [
+  // Separate image arrays for each theme
+  const winterWonderlandImages = [
     {
       id: 1,
       src: "https://vermiliondecors.com/assets/images/gallery/e1.webp",
-      alt: "Indoor housewarming decoration with pink drapes and lighting"
+      alt: "Winter Wonderland birthday decoration with pink trees"
     },
     {
       id: 2,
       src: "https://vermiliondecors.com/assets/images/gallery/e2.webp",
-      alt: "Outdoor tree decorations with string lights"
+      alt: "Winter Wonderland birthday table setup"
     },
     {
       id: 3,
       src: "https://vermiliondecors.com/assets/images/gallery/e3.webp",
-      alt: "Staircase decorations with purple lighting"
-    },
+      alt: "Winter Wonderland birthday entrance decoration"
+    }
+  ];
+
+  const krithvikImages = [
     {
       id: 4,
       src: "https://vermiliondecors.com/assets/images/gallery/e4.webp",
-      alt: "Hanging floral decorations with white flowers"
+      alt: "Krithvik birthday with green backdrop"
     },
     {
       id: 5,
       src: "https://vermiliondecors.com/assets/images/gallery/e5.webp",
-      alt: "Entrance decorations with pink drapes and flowers"
-    },
-    {
-      id: 6,
-      src: "https://vermiliondecors.com/assets/images/gallery/e6.webp",
-      alt: "Exterior house lighting with pink and green lights"
+      alt: "Krithvik birthday decoration with lights"
     }
   ];
 
-  // Function to get images based on active category
+  const aadhyaImages = [
+    {
+      id: 6,
+      src: "https://vermiliondecors.com/assets/images/gallery/e6.webp",
+      alt: "Aadhya birthday with fairy lights"
+    },
+    {
+      id: 7,
+      src: "https://vermiliondecors.com/assets/images/gallery/e7.webp",
+      alt: "Aadhya birthday with lantern decorations"
+    }
+  ];
+
+  const vivaanImages = [
+    {
+      id: 8,
+      src: "https://vermiliondecors.com/assets/images/gallery/e8.webp",
+      alt: "Vivaan birthday with pink tree decorations"
+    },
+    {
+      id: 9,
+      src: "https://vermiliondecors.com/assets/images/gallery/e9.webp",
+      alt: "Vivaan birthday party setup"
+    }
+  ];
+
+  // Empty arrays for themes without images yet
+  const likithaImages = [];
+  const vrushikaImages = [];
+  const dhikshanDhikshithaImages = [];
+  const mritikaImages = [];
+  const rainTreeImages = [];
+  const tiaraImages = [];
+
+  // Function to get images based on active theme
   const getFilteredImages = () => {
-    switch (activeCategory) {
-      case "house-warming":
-        return housewarmingImages;
+    switch (activeTheme) {
+      case "winter-wonderland":
+        return winterWonderlandImages;
+      case "krithvik":
+        return krithvikImages;
+      case "aadhya":
+        return aadhyaImages;
+      case "vivaan":
+        return vivaanImages;
+      case "likitha":
+        return likithaImages;
+      case "vrushika":
+        return vrushikaImages;
+      case "dhikshan-dhikshitha":
+        return dhikshanDhikshithaImages;
+      case "mritika":
+        return mritikaImages;
+      case "rain-tree":
+        return rainTreeImages;
+      case "tiara":
+        return tiaraImages;
       default:
-        return housewarmingImages;
+        return winterWonderlandImages; // Default to first theme if none selected
     }
   };
 
@@ -90,12 +149,12 @@ const Housewarming = () => {
   };
 
   return (
-    <div className="housewarming-page">
+    <div className="birthday-party-page">
       {/* Banner Section with Responsive Heading */}
       <div 
-        className="housewarming-banner position-relative" 
+        className="birthday-party-banner position-relative" 
         style={{ 
-          backgroundImage: "url('./wedding decors/housewarming.jpg')", 
+          backgroundImage: "url('./wedding decors/birthday party.jpg')", 
           backgroundSize: "cover",
           backgroundPosition: "top center",
           height: "450px",
@@ -114,33 +173,33 @@ const Housewarming = () => {
             width: '100%'
           }}
         >
-          House Warming Decorators In Tiruvannamalai
+          Birthday Party Decorations In Tiruvannamalai
         </h1>
       </div>
 
       {/* Introduction Text */}
       <Container className="py-4">
         <p className="mb-4" style={{ lineHeight: "1.8" }}>
-          Your first day at your new house always feels beautiful. It should be celebrated the right way as it is one of the best moments of your life. Buying the house of your dream is always an amazing feeling. Our event management team understands your absolute necessity and makes sure that your needs are met with the best housewarming decorations. We, at Vermilion Events and Decor have always put our clients before anything else.
+          Fun is everywhere you look right now! Your kids of all ages have loved classic birthday decorations for years, and with the latest trends coming up now and then, you can be sure that this one is here to stay! We all have kids that love living in a fantasy world, so do it for them, especially if they are something they watch daily, they are always dreaming about living in that world. Let's create birthday decorations for them to keep them smiling and happy.
         </p>
 
-        {/* Category Filter Buttons */}
-        <div className="categories d-flex flex-wrap justify-content-center mb-4">
-          {categories.map((category) => (
+        {/* Theme Names as Filter Buttons */}
+        <div className="theme-names d-flex flex-wrap justify-content-center mb-4">
+          {themeNames.map((theme) => (
             <Button
-              key={category.id}
-              variant={activeCategory === category.id ? "primary" : "outline-secondary"}
+              key={theme.id}
+              variant={activeTheme === theme.id ? "primary" : "outline-secondary"}
               className="m-1"
-              onClick={() => setActiveCategory(category.id)}
+              onClick={() => setActiveTheme(theme.id)}
               style={{
                 fontFamily: 'Poppins, sans-serif',
                 fontSize: '14px',
                 borderRadius: "4px",
-                color: activeCategory === category.id ? "#fff" : "#333",
+                color: activeTheme === theme.id ? "#fff" : "#333",
                 borderColor: "#ccc"
               }}
             >
-              {category.name}
+              {theme.name}
             </Button>
           ))}
         </div>
@@ -176,7 +235,7 @@ const Housewarming = () => {
         ) : (
           <div className="text-center py-5">
             <p style={{ fontFamily: 'Poppins, sans-serif', color: '#777' }}>
-              No images available for this category yet. Please check back soon!
+              No images available for this theme yet. Please check back soon!
             </p>
           </div>
         )}
@@ -205,4 +264,4 @@ const Housewarming = () => {
   );
 };
 
-export default Housewarming;
+export default BirthdayParty;
