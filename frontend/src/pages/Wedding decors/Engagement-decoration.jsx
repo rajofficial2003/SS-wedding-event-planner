@@ -1,147 +1,60 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import Testimonials from "../../components/Testimonials";
 import ImagePreviewModal from "../../components/ImagePreviewModal";
+import { engagementService } from "../../services/engagementService";
 
 const EngagementDecoration = () => {
-  // Client names list with IDs (without "All" option)
-  const clientNames = [
-    { id: "prithvi-aishwarya", name: "Prithvi + Aishwarya" },
-    { id: "kokila-somasundaram", name: "Kokila + Somasundaram" },
-    { id: "taj", name: "Taj" },
-    { id: "arun-yegapriya", name: "Arun + Yegapriya" },
-    { id: "rithika-vetri", name: "Rithika + Vetri" },
-    { id: "balaji-swathi", name: "Balaji + Swathi" },
-    { id: "sushmita-prakash", name: "Sushmita + Prakash" },
-    { id: "vignesh-divya", name: "Vignesh + Divya" },
-    { id: "nandhini-jacob", name: "Nandhini & Jacob" },
-    { id: "preetha-ashwin", name: "Preetha & Ashwin" },
-    { id: "sneha-arul", name: "Sneha & Arul" },
-    { id: "akshaya-dharshan", name: "Akshaya & Dharshan" },
-    { id: "minu-subramaiyan", name: "Minu + Subramaiyan" },
-    { id: "ramkumar-niveatha", name: "Ramkumar + Niveatha" }
-  ];
+  // State for categories and images from Firebase
+  const [categories, setCategories] = useState([]);
+  const [categoryImages, setCategoryImages] = useState({});
+  const [loading, setLoading] = useState(true);
 
-  // State to track which couple's images to display (default to first couple)
-  const [activeCouple, setActiveCouple] = useState(clientNames[0].id);
+  // State to track which category's images to display
+  const [activeCategory, setActiveCategory] = useState("");
 
   // State for image preview modal
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentGallery, setCurrentGallery] = useState([]);
 
-  // Separate image arrays for each couple
-  const prithviAishwaryaImages = [
-    {
-      id: 1,
-      src: "https://vermiliondecors.com/assets/images/gallery/e1.webp",
-      alt: "Prithvi and Aishwarya engagement setup"
-    },
-    {
-      id: 2,
-      src: "https://vermiliondecors.com/assets/images/gallery/e3.webp",
-      alt: "Prithvi and Aishwarya stage decoration"
-    },
-    {
-      id: 3,
-      src: "https://vermiliondecors.com/assets/images/gallery/e4.webp",
-      alt: "Prithvi and Aishwarya floral decoration"
-    }
-  ];
+  // Load data from Firebase on component mount
+  useEffect(() => {
+    loadEngagementData();
+  }, []);
 
-  const kokilaSomasundaramImages = [
-    {
-      id: 4,
-      src: "https://vermiliondecors.com/assets/images/gallery/e8.webp",
-      alt: "Kokila and Somasundaram engagement photo display"
-    },
-    {
-      id: 5,
-      src: "https://vermiliondecors.com/assets/images/gallery/e9.webp",
-      alt: "Kokila and Somasundaram invitation display"
-    }
-  ];
+  const loadEngagementData = async () => {
+    try {
+      setLoading(true);
+      
+      // Get all categories
+      const categoriesData = await engagementService.getAllCategories();
+      const categoryNames = categoriesData.map(cat => cat.categoryName || cat.id);
+      
+      setCategories(categoryNames);
 
-  const tajImages = [
-    {
-      id: 6,
-      src: "https://vermiliondecors.com/assets/images/gallery/e10.webp",
-      alt: "Taj engagement stage"
-    }
-  ];
-
-  const arunYegapriyaImages = [
-    {
-      id: 7,
-      src: "https://vermiliondecors.com/assets/images/gallery/e13.webp",
-      alt: "Arun and Yegapriya pink themed decoration"
-    }
-  ];
-
-  const rithikaVetriImages = [
-    {
-      id: 8,
-      src: "https://vermiliondecors.com/assets/images/gallery/e14.webp",
-      alt: "Rithika and Vetri floral wall"
-    }
-  ];
-
-  const balajiSwathiImages = [
-    {
-      id: 9,
-      src: "https://vermiliondecors.com/assets/images/gallery/e17.webp",
-      alt: "Balaji and Swathi floral backdrop"
-    }
-  ];
-
-  // Empty arrays for couples without images yet
-  const sushmitaPrakashImages = [];
-  const vigneshDivyaImages = [];
-  const nandhiniJacobImages = [];
-  const preethaAshwinImages = [];
-  const snehaArulImages = [];
-  const akshayaDharshanImages = [];
-  const minuSubramaiyanImages = [];
-  const ramkumarNiveathaImages = [];
-
-  // Function to get images based on active couple
-  const getFilteredImages = () => {
-    switch (activeCouple) {
-      case "prithvi-aishwarya":
-        return prithviAishwaryaImages;
-      case "kokila-somasundaram":
-        return kokilaSomasundaramImages;
-      case "taj":
-        return tajImages;
-      case "arun-yegapriya":
-        return arunYegapriyaImages;
-      case "rithika-vetri":
-        return rithikaVetriImages;
-      case "balaji-swathi":
-        return balajiSwathiImages;
-      case "sushmita-prakash":
-        return sushmitaPrakashImages;
-      case "vignesh-divya":
-        return vigneshDivyaImages;
-      case "nandhini-jacob":
-        return nandhiniJacobImages;
-      case "preetha-ashwin":
-        return preethaAshwinImages;
-      case "sneha-arul":
-        return snehaArulImages;
-      case "akshaya-dharshan":
-        return akshayaDharshanImages;
-      case "minu-subramaiyan":
-        return minuSubramaiyanImages;
-      case "ramkumar-niveatha":
-        return ramkumarNiveathaImages;
-      default:
-        return prithviAishwaryaImages; // Default to first couple if none selected
+      // Load images for each category
+      const imagesData = {};
+      for (const categoryName of categoryNames) {
+        const images = await engagementService.getCategoryImages(categoryName);
+        imagesData[categoryName] = images;
+      }
+      
+      setCategoryImages(imagesData);
+      
+      // Set first category as active if available
+      if (categoryNames.length > 0) {
+        setActiveCategory(categoryNames[0]);
+      }
+    } catch (error) {
+      console.error("Error loading engagement data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   // Get filtered images
-  const filteredImages = getFilteredImages();
+  const filteredImages = categoryImages[activeCategory] || [];
 
   // Function to open image preview modal
   const openImageModal = (image, gallery) => {
@@ -154,7 +67,7 @@ const EngagementDecoration = () => {
   const nextImage = () => {
     if (!selectedImage || currentGallery.length === 0) return;
     
-    const currentIndex = currentGallery.findIndex(img => img.id === selectedImage.id);
+    const currentIndex = currentGallery.findIndex(img => img.fileName === selectedImage.fileName);
     const nextIndex = (currentIndex + 1) % currentGallery.length;
     setSelectedImage(currentGallery[nextIndex]);
   };
@@ -163,7 +76,7 @@ const EngagementDecoration = () => {
   const prevImage = () => {
     if (!selectedImage || currentGallery.length === 0) return;
     
-    const currentIndex = currentGallery.findIndex(img => img.id === selectedImage.id);
+    const currentIndex = currentGallery.findIndex(img => img.fileName === selectedImage.fileName);
     const prevIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
     setSelectedImage(currentGallery[prevIndex]);
   };
@@ -188,7 +101,7 @@ const EngagementDecoration = () => {
           className="text-white position-relative text-center px-3" 
           style={{ 
             fontFamily: 'Playfair Display, serif', 
-            fontSize: 'clamp(1.8rem, 5vw, 3rem)', // Responsive font size
+            fontSize: 'clamp(1.8rem, 5vw, 3rem)',
             zIndex: 2,
             width: '100%'
           }}
@@ -203,42 +116,54 @@ const EngagementDecoration = () => {
           Weddings are a union of love, family and traditions that hold a special place in our hearts forever. Wedding and engagement decorations are something that play an important role in making your wedding startling and <strong>Wedding and engagement stage decorations in Chennai</strong> come off in diverse styles from a traditional setup to outdoor beach weddings to an extravagant theme wedding. Couples no longer want the done-and-dusted wedding stage decoration in chennai. They want something that's fresh and remarkable. We at Vermilion Decors love to deliver nothing but the best for you at your Wedding and engagement decorations. Serving you a wide range of options to choose from to customize from being an array of flowers to surreal lights you name it, we have it.
         </p>
 
-        {/* Client Names as Filter Buttons */}
-        <div className="client-names d-flex flex-wrap justify-content-center mb-4">
-          {clientNames.map((client) => (
-            <Button
-              key={client.id}
-              variant={activeCouple === client.id ? "primary" : "outline-secondary"}
-              className="m-1"
-              onClick={() => setActiveCouple(client.id)}
-              style={{
-                fontFamily: 'Poppins, sans-serif',
-                fontSize: '14px',
-                borderRadius: "4px",
-                color: activeCouple === client.id ? "#fff" : "#333",
-                borderColor: "#ccc"
-              }}
-            >
-              {client.name}
-            </Button>
-          ))}
-        </div>
+        {/* Loading State */}
+        {loading ? (
+          <div className="text-center py-5">
+            <Spinner animation="border" style={{ color: "#f7374f" }} />
+            <p className="mt-2">Loading engagement decorations...</p>
+          </div>
+        ) : (
+          <>
+            {/* Category Names as Filter Buttons */}
+            {categories.length > 0 && (
+              <div className="client-names d-flex flex-wrap justify-content-center mb-4">
+                {categories.map((category) => (
+                  <Button
+                    key={category}
+                    variant={activeCategory === category ? "primary" : "outline-secondary"}
+                    className="m-1"
+                    onClick={() => setActiveCategory(category)}
+                    style={{
+                      fontFamily: 'Poppins, sans-serif',
+                      fontSize: '14px',
+                      borderRadius: "4px",
+                      color: activeCategory === category ? "#fff" : "#333",
+                      borderColor: "#ccc"
+                    }}
+                  >
+                    {category}
+                  </Button>
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </Container>
 
       {/* Gallery Grid */}
       <Container className="gallery-grid mb-5">
-        {filteredImages.length > 0 ? (
+        {loading ? null : filteredImages.length > 0 ? (
           <Row>
-            {filteredImages.map(image => (
-              <Col key={image.id} xs={12} sm={6} md={4} className="gallery-item mb-4">
+            {filteredImages.map((image, index) => (
+              <Col key={`${image.fileName || image.name}_${index}`} xs={12} sm={6} md={4} className="gallery-item mb-4">
                 <div 
                   className="gallery-image-container" 
                   style={{ overflow: 'hidden', cursor: 'pointer' }}
                   onClick={() => openImageModal(image, filteredImages)}
                 >
                   <img 
-                    src={image.src || "/placeholder.svg"} 
-                    alt={image.alt} 
+                    src={image.url || "/placeholder.svg"} 
+                    alt={image.name || `Engagement decoration ${index + 1}`} 
                     className="img-fluid w-100"
                     style={{ 
                       height: "250px", 
@@ -255,7 +180,10 @@ const EngagementDecoration = () => {
         ) : (
           <div className="text-center py-5">
             <p style={{ fontFamily: 'Poppins, sans-serif', color: '#777' }}>
-              No images available for this couple yet. Please check back soon!
+              {categories.length === 0 
+                ? "No engagement decorations available yet. Please check back soon!"
+                : "No images available for this category yet. Please check back soon!"
+              }
             </p>
           </div>
         )}

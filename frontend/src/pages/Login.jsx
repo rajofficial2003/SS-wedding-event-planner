@@ -1,8 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Container, Row, Col, Form, Button, Card, Alert } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
+import { FaEye, FaEyeSlash } from "react-icons/fa"
 
 const Login = () => {
   // Primary color for styling from App.css
@@ -16,12 +17,41 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const navigate = useNavigate()
 
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkExistingAuth = () => {
+      const authStatus = localStorage.getItem("isAuthenticated")
+      const loginTime = localStorage.getItem("loginTime")
+
+      if (authStatus === "true" && loginTime) {
+        // Check if login is still valid (24 hours)
+        const currentTime = new Date().getTime()
+        const loginTimestamp = Number.parseInt(loginTime)
+        const twentyFourHours = 24 * 60 * 60 * 1000
+
+        if (currentTime - loginTimestamp < twentyFourHours) {
+          // User is already authenticated, redirect to dashboard
+          navigate("/admin/dashboard", { replace: true })
+        } else {
+          // Session expired, clear storage
+          localStorage.removeItem("isAuthenticated")
+          localStorage.removeItem("loginTime")
+        }
+      }
+    }
+
+    checkExistingAuth()
+  }, [navigate])
+
   // Mock credentials - in a real app, this would be handled by a backend
-  const validUsername = "admin"
-  const validPassword = "password123"
+  const validCredentials = [
+    { username: "admin", password: "admin123" },
+    { username: "sswedding", password: "sswedding@2024" },
+  ]
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -37,16 +67,30 @@ const Login = () => {
 
     // Mock authentication - in a real app, this would be an API call
     setTimeout(() => {
-      if (username === validUsername && password === validPassword) {
-        // Store authentication state in localStorage
+      const isValidCredential = validCredentials.some(
+        (cred) => cred.username === username && cred.password === password,
+      )
+
+      if (isValidCredential) {
+        // Store authentication state and timestamp in localStorage
         localStorage.setItem("isAuthenticated", "true")
+        localStorage.setItem("loginTime", new Date().getTime().toString())
+        localStorage.setItem("adminUsername", username)
+
         // Redirect to admin dashboard
-        navigate("/admin/dashboard")
+        navigate("/admin/dashboard", { replace: true })
       } else {
         setError("Invalid username or password")
       }
       setLoading(false)
     }, 1000)
+  }
+
+  const handleLogout = () => {
+    // Clear authentication data
+    localStorage.removeItem("isAuthenticated")
+    localStorage.removeItem("loginTime")
+    localStorage.removeItem("adminUsername")
   }
 
   return (
@@ -83,31 +127,62 @@ const Login = () => {
                   </p>
                 </div>
 
-                {error && <Alert variant="danger">{error}</Alert>}
+                {error && (
+                  <Alert variant="danger" style={{ fontFamily: bodyFont }}>
+                    {error}
+                  </Alert>
+                )}
 
                 <Form onSubmit={handleSubmit}>
                   <Form.Group className="mb-3">
-                    <Form.Label style={{ fontFamily: bodyFont }}>Username</Form.Label>
+                    <Form.Label style={{ fontFamily: bodyFont, fontWeight: 500 }}>Username</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Enter username"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       required
-                      style={{ fontFamily: bodyFont, padding: "0.6rem 0.75rem" }}
+                      style={{
+                        fontFamily: bodyFont,
+                        padding: "0.6rem 0.75rem",
+                        border: "1px solid #ddd",
+                        borderRadius: "0.375rem",
+                      }}
                     />
                   </Form.Group>
 
-                  <Form.Group className="mb-4">
-                    <Form.Label style={{ fontFamily: bodyFont }}>Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="Enter password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      style={{ fontFamily: bodyFont, padding: "0.6rem 0.75rem" }}
-                    />
+                  <Form.Group className="mb-4 position-relative">
+                    <Form.Label style={{ fontFamily: bodyFont, fontWeight: 500 }}>Password</Form.Label>
+                    <div className="position-relative">
+                      <Form.Control
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Enter password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        style={{
+                          fontFamily: bodyFont,
+                          padding: "0.6rem 2.5rem 0.6rem 0.75rem",
+                          border: "1px solid #ddd",
+                          borderRadius: "0.375rem",
+                        }}
+                      />
+                      <Button
+                        type="button"
+                        variant="link"
+                        className="position-absolute top-50 end-0 translate-middle-y border-0 bg-transparent"
+                        onClick={() => setShowPassword(!showPassword)}
+                        style={{
+                          padding: "0.25rem 0.5rem",
+                          color: "#6c757d",
+                          textDecoration: "none",
+                          zIndex: 10,
+                        }}
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                      >
+                        {showPassword ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
+                      </Button>
+                    </div>
                   </Form.Group>
 
                   <div className="d-grid">

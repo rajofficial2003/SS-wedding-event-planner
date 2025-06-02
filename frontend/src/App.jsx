@@ -15,7 +15,7 @@ import About from "./pages/About"
 import NotFound from "./pages/NotFound"
 import BookUs from "./pages/Book-us"
 import EngagementDecoration from "./pages/Wedding decors/Engagement-decoration"
-import ReceptionDecoration from "./pages/Wedding decors/Reception-Decoration"  
+import ReceptionDecoration from "./pages/Wedding decors/Reception-Decoration"
 import SangeetAndMehendi from "./pages/Wedding decors/SangeetAndMehendi"
 import BabyShower from "./pages/Wedding decors/BabyShower"
 import BirthdayParty from "./pages/Wedding decors/BirthdayParty"
@@ -34,20 +34,18 @@ import AdminDashboard from "./pages/AdminDashboard"
 
 // Layout component to conditionally render Navbar and Footer
 const AppLayout = ({ children }) => {
-  const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith('/admin');
-  
+  const location = useLocation()
+  const isAdminRoute = location.pathname.startsWith("/admin")
+
   return (
     <div className="d-flex flex-column min-vh-100">
       {!isAdminRoute && <Navbar />}
-      <main className={`flex-grow-1 ${isAdminRoute ? 'admin-main' : ''}`}>
-        {children}
-      </main>
+      <main className={`flex-grow-1 ${isAdminRoute ? "admin-main" : ""}`}>{children}</main>
       {!isAdminRoute && <Footer />}
       {!isAdminRoute && <BackToTop />}
     </div>
-  );
-};
+  )
+}
 
 function App() {
   return (
@@ -72,19 +70,18 @@ function App() {
           <Route path="/DJ" element={<DJ />} />
           <Route path="/catering" element={<Catering />} />
           <Route path="/chat-stall" element={<ChatStall />} />
-          
-          
+
           {/* Admin Routes */}
           <Route path="/admin/login" element={<Login />} />
-          <Route 
-            path="/admin/dashboard" 
+          <Route
+            path="/admin/dashboard"
             element={
               <ProtectedRoute>
                 <AdminDashboard />
               </ProtectedRoute>
-            } 
+            }
           />
-          
+
           {/* Catch-all route for 404 Not Found */}
           <Route path="*" element={<NotFound />} />
         </Routes>

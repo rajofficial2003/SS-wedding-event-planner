@@ -1,274 +1,236 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+"use client"
+
+import { useState, useEffect } from "react"
+import { Container, Row, Col, Button, Spinner } from "react-bootstrap"
+import ImagePreviewModal from "../components/ImagePreviewModal"
+import { galleryService } from "../services/galleryService"
 
 const Gallery = () => {
-  const [activeCategory, setActiveCategory] = useState("all");
+  // State for categories and images from Firebase
+  const [categories, setCategories] = useState([])
+  const [categoryImages, setCategoryImages] = useState({})
+  const [loading, setLoading] = useState(true)
 
-  // Categories for filtering
-  const categories = [
-    { id: "all", name: "All" },
-    { id: "engagement", name: "Engagement" },
-    { id: "marriage", name: "Marriage" },
-    { id: "outdoor", name: "Out door" },
-    { id: "reception", name: "Reception" },
-    { id: "christain", name: "Christain Wedding" },
-    { id: "nikkah", name: "Nikkah" },
-    { id: "sangeet", name: "Sangeet & mehndi" },
-    { id: "birthday", name: "Birthday" },
-    { id: "babyShower", name: "Baby Shower" },
-    { id: "babyCradle", name: "Baby Cradle" }
-  ];
+  // State to track which category's images to display (default to "all")
+  const [activeCategory, setActiveCategory] = useState("all")
 
-  // Separate image arrays for each category
-  const engagementImages = [
-    {
-      id: 1,
-      src: "https://vermiliondecors.com/assets/images/gallery/e1.webp",
-      alt: "Outdoor engagement setup with mandap"
-    },
-    {
-      id: 3,
-      src: "https://vermiliondecors.com/assets/images/gallery/e3.webp",
-      alt: "Engagement stage with pink backdrop"
-    },
-    {
-      id: 4,
-      src: "https://vermiliondecors.com/assets/images/gallery/e4.webp",
-      alt: "Floral engagement decoration"
-    },
-    {
-      id: 8,
-      src: "https://vermiliondecors.com/assets/images/gallery/e8.webp",
-      alt: "Engagement photo display"
-    },
-    {
-      id: 9,
-      src: "https://vermiliondecors.com/assets/images/gallery/e9.webp",
-      alt: "Engagement invitation display"
-    },
-    {
-      id: 10,
-      src: "https://vermiliondecors.com/assets/images/gallery/e10.webp",
-      alt: "Simple engagement stage"
-    },
-    {
-      id: 13,
-      src: "https://vermiliondecors.com/assets/images/gallery/e13.webp",
-      alt: "Pink themed engagement decoration"
-    },
-    {
-      id: 14,
-      src: "https://vermiliondecors.com/assets/images/gallery/e14.webp",
-      alt: "Pink floral wall for engagement"
-    },
-    {
-      id: 17,
-      src: "https://vermiliondecors.com/assets/images/gallery/e17.webp",
-      alt: "Floral engagement backdrop"
+  // State for image preview modal
+  const [showModal, setShowModal] = useState(false)
+  const [selectedImage, setSelectedImage] = useState(null)
+  const [currentGallery, setCurrentGallery] = useState([])
+
+  // Load data from Firebase on component mount
+  useEffect(() => {
+    loadGalleryData()
+  }, [])
+
+  const loadGalleryData = async () => {
+    try {
+      setLoading(true)
+
+      // Get all categories
+      const categoriesData = await galleryService.getAllCategories()
+      const categoryNames = categoriesData.map((cat) => cat.categoryName || cat.id)
+
+      setCategories(categoryNames)
+
+      // Load images for each category
+      const imagesData = {}
+      for (const categoryName of categoryNames) {
+        const images = await galleryService.getCategoryImages(categoryName)
+        imagesData[categoryName] = images
+      }
+
+      setCategoryImages(imagesData)
+    } catch (error) {
+      console.error("Error loading gallery data:", error)
+    } finally {
+      setLoading(false)
     }
-  ];
-
-  const marriageImages = [
-    {
-      id: 2,
-      src: "https://vermiliondecors.com/assets/images/gallery/e2.webp",
-      alt: "Indoor marriage decoration with stage"
-    },
-    {
-      id: 5,
-      src: "https://vermiliondecors.com/assets/images/gallery/e5.webp",
-      alt: "Green themed marriage decoration"
-    },
-    {
-      id: 11,
-      src: "https://vermiliondecors.com/assets/images/gallery/e11.webp",
-      alt: "White floral marriage decoration"
-    },
-    {
-      id: 18,
-      src: "https://vermiliondecors.com/assets/images/gallery/e18.webp",
-      alt: "Outdoor marriage setup"
-    }
-  ];
-
-  const outdoorImages = [
-    {
-      id: 1,
-      src: "https://vermiliondecors.com/assets/images/gallery/e1.webp",
-      alt: "Outdoor engagement setup with mandap"
-    },
-    {
-      id: 18,
-      src: "https://vermiliondecors.com/assets/images/gallery/e18.webp",
-      alt: "Outdoor marriage setup"
-    }
-  ];
-
-  const receptionImages = [
-    {
-      id: 6,
-      src: "https://vermiliondecors.com/assets/images/gallery/e6.webp",
-      alt: "Reception hall decoration"
-    },
-    {
-      id: 12,
-      src: "https://vermiliondecors.com/assets/images/gallery/e12.webp",
-      alt: "Reception stage with couple seating"
-    },
-    {
-      id: 16,
-      src: "https://vermiliondecors.com/assets/images/gallery/e16.webp",
-      alt: "Reception stage with pink backdrop"
-    }
-  ];
-
-  const christainImages = [
-    {
-      id: 15,
-      src: "https://vermiliondecors.com/assets/images/gallery/e15.webp",
-      alt: "Christian wedding welcome board"
-    }
-  ];
-
-  const nikkahImages = [
-    // Currently no images for this category
-  ];
-
-  const sangeetImages = [
-    {
-      id: 7,
-      src: "https://vermiliondecors.com/assets/images/gallery/e7.webp",
-      alt: "Sangeet decoration with hanging flowers"
-    }
-  ];
-
-  const birthdayImages = [
-    // Currently no images for this category
-  ];
-
-  const babyShowerImages = [
-    // Currently no images for this category
-  ];
-
-  const babyCradleImages = [
-    // Currently no images for this category
-  ];
+  }
 
   // Get images based on active category
   const getFilteredImages = () => {
-    switch (activeCategory) {
-      case "engagement":
-        return engagementImages;
-      case "marriage":
-        return marriageImages;
-      case "outdoor":
-        return outdoorImages;
-      case "reception":
-        return receptionImages;
-      case "christain":
-        return christainImages;
-      case "nikkah":
-        return nikkahImages;
-      case "sangeet":
-        return sangeetImages;
-      case "birthday":
-        return birthdayImages;
-      case "babyShower":
-        return babyShowerImages;
-      case "babyCradle":
-        return babyCradleImages;
-      case "all":
-      default:
-        // Combine all images for "all" category
-        return [
-          ...engagementImages,
-          ...marriageImages,
-          ...receptionImages,
-          ...christainImages,
-          ...sangeetImages,
-          // Filter out duplicates that appear in multiple categories
-        ].filter((image, index, self) => 
-          index === self.findIndex((i) => i.id === image.id)
-        );
+    if (activeCategory === "all") {
+      // Combine all images from all categories
+      const allImages = []
+      let imageId = 1
+
+      Object.keys(categoryImages).forEach((categoryName) => {
+        const categoryImgs = categoryImages[categoryName] || []
+        categoryImgs.forEach((image) => {
+          allImages.push({
+            ...image,
+            id: imageId++, // Assign unique ID for "all" view
+            category: categoryName, // Keep track of original category
+          })
+        })
+      })
+
+      // Remove duplicates based on fileName if any
+      return allImages.filter((image, index, self) => index === self.findIndex((i) => i.fileName === image.fileName))
+    } else {
+      // Return images for specific category
+      return categoryImages[activeCategory] || []
     }
-  };
+  }
 
   // Get filtered images
-  const filteredImages = getFilteredImages();
+  const filteredImages = getFilteredImages()
+
+  // Function to open image preview modal
+  const openImageModal = (image, gallery) => {
+    setSelectedImage(image)
+    setCurrentGallery(gallery)
+    setShowModal(true)
+  }
+
+  // Function to navigate to next image
+  const nextImage = () => {
+    if (!selectedImage || currentGallery.length === 0) return
+
+    const currentIndex = currentGallery.findIndex((img) => img.fileName === selectedImage.fileName)
+    const nextIndex = (currentIndex + 1) % currentGallery.length
+    setSelectedImage(currentGallery[nextIndex])
+  }
+
+  // Function to navigate to previous image
+  const prevImage = () => {
+    if (!selectedImage || currentGallery.length === 0) return
+
+    const currentIndex = currentGallery.findIndex((img) => img.fileName === selectedImage.fileName)
+    const prevIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length
+    setSelectedImage(currentGallery[prevIndex])
+  }
+
+  // Create categories array with "All" option
+  const displayCategories = [{ id: "all", name: "All" }, ...categories.map((cat) => ({ id: cat, name: cat }))]
 
   return (
     <div className="gallery-page">
       {/* Banner Section */}
-      <div 
-        className="gallery-banner position-relative" 
-        style={{ 
-          backgroundImage: "url('./gallery banner.jpg')", 
+      <div
+        className="gallery-banner position-relative"
+        style={{
+          backgroundImage: "url('./gallery banner.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           height: "450px",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
-        <div className="overlay position-absolute w-100 h-100 top-0 start-0" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}></div>
-        <h1 className="text-white position-relative" style={{ fontFamily: 'Playfair Display, serif', fontSize: '3rem', zIndex: 2 }}>Gallery</h1>
+        <div
+          className="overlay position-absolute w-100 h-100 top-0 start-0"
+          style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+        ></div>
+        <h1
+          className="text-white position-relative"
+          style={{ fontFamily: "Playfair Display, serif", fontSize: "3rem", zIndex: 2 }}
+        >
+          Gallery
+        </h1>
       </div>
 
       {/* Introduction Text */}
       <Container className="py-4 text-center">
         <p className="mb-4">
-          We at SS Event and Decors take pride in the fact that we are trusted by our clients time and again. If you are still reading this, our wedding event planner are looking forward to a happy and productive collaboration with you!
+          We at SS Event and Decors take pride in the fact that we are trusted by our clients time and again. If you are
+          still reading this, our wedding event planner are looking forward to a happy and productive collaboration with
+          you!
         </p>
       </Container>
 
-      {/* Category Filter Buttons */}
-      <Container className="mb-4">
-        <div className="category-filters d-flex flex-wrap justify-content-center">
-          {categories.map(category => (
-            <Button
-              key={category.id}
-              variant={activeCategory === category.id ? "primary" : "outline-secondary"}
-              className="m-1"
-              onClick={() => setActiveCategory(category.id)}
-              style={{ 
-                fontFamily: 'Playfair Display, serif',
-                borderRadius: 0,
-                color: activeCategory === category.id ? "#fff" : "#333", // Darker text color for inactive buttons
-                borderColor: "#ccc"
-              }}
-            >
-              {category.name}
-            </Button>
-          ))}
-        </div>
-      </Container>
-
-      {/* Gallery Grid */}
-      <Container className="gallery-grid mb-5">
-        <Row>
-          {filteredImages.map(image => (
-            <Col key={image.id} xs={12} sm={6} md={4} className="gallery-item mb-4">
-              <div className="gallery-image-container" style={{ overflow: 'hidden' }}>
-                <img 
-                  src={image.src || "/placeholder.svg"} 
-                  alt={image.alt} 
-                  className="img-fluid w-100"
-                  style={{ 
-                    height: "250px", 
-                    objectFit: "cover",
-                    transition: "transform 0.3s ease"
+      {/* Loading State */}
+      {loading ? (
+        <Container>
+          <div className="text-center py-5">
+            <Spinner animation="border" style={{ color: "#f7374f" }} />
+            <p className="mt-2">Loading gallery...</p>
+          </div>
+        </Container>
+      ) : (
+        <>
+          {/* Category Filter Buttons */}
+          <Container className="mb-4">
+            <div className="category-filters d-flex flex-wrap justify-content-center">
+              {displayCategories.map((category) => (
+                <Button
+                  key={category.id}
+                  variant={activeCategory === category.id ? "primary" : "outline-secondary"}
+                  className="m-1"
+                  onClick={() => setActiveCategory(category.id)}
+                  style={{
+                    fontFamily: "Playfair Display, serif",
+                    borderRadius: 0,
+                    color: activeCategory === category.id ? "#fff" : "#333",
+                    borderColor: "#ccc",
                   }}
-                  onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.05)"}
-                  onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
-                />
-              </div>
-            </Col>
-          ))}
-        </Row>
-      </Container>
-    </div>
-  );
-};
+                >
+                  {category.name}
+                </Button>
+              ))}
+            </div>
+          </Container>
 
-export default Gallery;
+          {/* Gallery Grid */}
+          <Container className="gallery-grid mb-5">
+            {filteredImages.length > 0 ? (
+              <Row>
+                {filteredImages.map((image, index) => (
+                  <Col
+                    key={`${image.fileName || image.name}_${index}`}
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    className="gallery-item mb-4"
+                  >
+                    <div
+                      className="gallery-image-container"
+                      style={{ overflow: "hidden", cursor: "pointer" }}
+                      onClick={() => openImageModal(image, filteredImages)}
+                    >
+                      <img
+                        src={image.url || "/placeholder.svg"}
+                        alt={image.name || `Gallery image ${index + 1}`}
+                        className="img-fluid w-100"
+                        style={{
+                          height: "250px",
+                          objectFit: "cover",
+                          transition: "transform 0.3s ease",
+                        }}
+                        onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+                        onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                      />
+                    </div>
+                  </Col>
+                ))}
+              </Row>
+            ) : (
+              <div className="text-center py-5">
+                <p style={{ fontFamily: "Poppins, sans-serif", color: "#777" }}>
+                  {categories.length === 0
+                    ? "No gallery images available yet. Please check back soon!"
+                    : "No images available for this category yet. Please check back soon!"}
+                </p>
+              </div>
+            )}
+          </Container>
+        </>
+      )}
+
+      {/* Use the ImagePreviewModal Component */}
+      <ImagePreviewModal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        selectedImage={selectedImage}
+        currentGallery={currentGallery}
+        onNext={nextImage}
+        onPrev={prevImage}
+      />
+    </div>
+  )
+}
+
+export default Gallery

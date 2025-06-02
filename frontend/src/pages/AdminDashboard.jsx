@@ -48,6 +48,7 @@ import { babyshowerService } from "../services/babyshowerService"
 import { housewarmingService } from "../services/housewarmingService"
 import { sangeetmehandiService } from "../services/sangeetmehandiService"
 import { compressImage, validateImageSize, getImageSizeInKB } from "../utils/imageCompression"
+import { useNavigate } from "react-router-dom"
 
 const AdminDashboard = () => {
   // Primary color for styling from App.css
@@ -370,14 +371,21 @@ const AdminDashboard = () => {
     setShowLogoutModal(true)
   }
 
+  const navigate = useNavigate()
+
   const confirmLogout = () => {
-    // Perform logout actions here
+    // Clear all authentication data from localStorage
+    localStorage.removeItem("isAuthenticated")
+    localStorage.removeItem("loginTime")
+    localStorage.removeItem("adminUsername")
+
+    // Show success message
     showToast("success", "Logged out successfully")
     setShowLogoutModal(false)
 
-    // Redirect to login page
+    // Redirect to login page using React Router
     setTimeout(() => {
-      window.location.href = "/admin/login"
+      navigate("/admin/login", { replace: true })
     }, 500)
   }
 
